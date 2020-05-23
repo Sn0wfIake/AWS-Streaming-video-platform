@@ -19,6 +19,60 @@
 <!-- Compiled and minified Bootstrap JavaScript -->
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+      function visualiza_login() {
+         document.getElementById('login').style.visibility='visible';
+         document.getElementById('login').style.display='block';
+         document.getElementById('registro').style.visibility='hidden';
+         document.getElementById('registro').style.display='none';
+      };
+      function visualiza_registro() {
+         document.getElementById('registro').style.visibility='visible';
+         document.getElementById('registro').style.display='block';
+  
+	document.getElementById('login').style.visibility = 'hidden';
+		document.getElementById('login').style.display = 'none';
+	};
+	var check = function() {
+		  if (document.getElementById('password').value ==
+		    document.getElementById('confirm_password').value) {
+		    document.getElementById('message').style.color = 'green';
+		    document.getElementById('message').innerHTML = 'matching';
+		  } else {
+		    document.getElementById('message').style.color = 'red';
+		    document.getElementById('message').innerHTML = 'not matching';
+		  }
+		}
+	function __(id){
+		  return document.getElementById(id);
+		}
+
+		//Validar contraseña
+		function validarContrasena() {
+		  var pass = __('contrasena').value,
+		      pass2 = __('contrasena2').value;
+		  if(pass != '' && pass2 != ''){
+		    if(pass != pass2){
+		      //si las contraseñas no coinciden
+		      __('resultado').innerHTML = '<p class="error"><strong>Error: </strong>¡Las contraseñas no coinciden!</p>';
+		    } else {
+		      //Si todo esta correcto 
+		    	document.getElementById("registro").submit(); 
+		    }
+		  } else {
+		    //si los campos o uno, este vacio
+		    __('resultado').innerHTML = '<p class="error"><strong>Error: </strong>¡Los campos no deben estar vacios!</p>';
+		  } 
+		}
+
+		//enviar formulario con la tecla ENTER
+		function enterEnviar(event){
+		    if(event.keyCode == 13){
+		      validarContraseña()
+		    }
+		}
+</script>
+
 <title>SnowMedia BETA 1.0</title>
 </head>
 <body>
@@ -29,7 +83,7 @@
 			<h2>
 				SnowMedia<br> Pagina de registro
 			</h2>
-			<p>Introduce tu usuario, o contraseña para acceder</p>
+			<p>Introduce tu usuario, o contraseña para acceder, o registrate</p>
 
 
 		</div>
@@ -76,30 +130,58 @@
 		</div>
 	</div>
 	<div class="main">
-	
-	<br>
-	<div class="jumbotron jumbotron-fluid">
- 
-    <h1 class="display-4">  SnowMedia</h1>
-    <p class="lead">  Servidor de contenido multimedia en Streaming</p>
-  </div>
-			
+
+		<br>
+		<div class="jumbotron jumbotron-fluid">
+
+			<h1 class="display-4">SnowMedia</h1>
+			<p class="lead">Servidor de contenido multimedia en Streaming</p>
+		</div>
+
 		<div class="col-md-6 col-sm-12">
-			
+
 
 			<div class="login-form">
 
-				<form>
-					<div class="form-group">
+				<form id="login" style="visibility: visible; display: block;"
+					action="login.jsp" method="get">
+					<div id="login" class="form-group">
 						<label>Usuario o correo</label> <input type="text"
-							class="form-control" placeholder="Usuario o correo">
+							class="form-control" placeholder="Usuario o correo" required>
+					</div>
+					<div id="login" class="form-group">
+						<label>Contraseña</label> <input type="password"
+							class="form-control" placeholder="Contraseña" required>
+					</div>
+					<button id="login" type="submit" class="btn btn-black">Login</button>
+					<button id="login" type="button" class="btn btn-secondary"
+						onclick="visualiza_registro()">Registro</button>
+				</form>
+
+				<form id="registro" style="visibility: hidden; display: none;"
+					action="registro.jsp" method="get">
+					<div  class="form-group">
+						<label>Correo electronico*</label> <input type="text"
+							class="form-control" placeholder="Correo electronico*" required>
 					</div>
 					<div class="form-group">
-						<label>Contraseña</label> <input type="password"
-							class="form-control" placeholder="Contraseña">
+						
+							<label>Nombre
+							de usuario* </label> <input type="text" class="form-control"
+							placeholder="Nombre de usuario*" required>
 					</div>
-					<button type="submit" class="btn btn-black">Login</button>
-					<button type="submit" class="btn btn-secondary">Registro</button>
+					<div  class="form-group">
+						<label>Contraseña*</label> <input id="contrasena" type="password"
+							class="form-control" placeholder="Contraseña*" onkeyup="check();" required>
+					</div>
+					<div  class="form-group">
+						<label>Repetir contraseña</label> <input id="contrasena2" type="password"
+							class="form-control" placeholder="Repetir contraseña" onkeyup="check();" required>
+					</div>
+					<div id="resultado"></div>  
+					<button  type="button" class="btn btn-black" onclick="validarContrasena()"  >Registrame</button>
+					<button type="button" class="btn btn-secondary"
+						onclick="visualiza_login()">Ya tengo cuenta</button>
 				</form>
 			</div>
 
