@@ -1,20 +1,28 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+<%
+if (request.getParameter("cerrar")!=null){
+	session.invalidate();
 
+}
+%>
 <link
 	href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 	rel="stylesheet" id="bootstrap-css">
 <script
 	src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<link rel="stylesheet" type="text/css" href="index.css">
+<link rel="stylesheet" type="text/css" href="css/index.css">
 <!-- Compiled and minified Bootstrap CSS -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <!-- Minified JS library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!-- Compiled and minified Bootstrap JavaScript -->
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -48,27 +56,27 @@
 		return document.getElementById(id);
 	}
 
-	//Validar contraseña
+	//Validar contrase�a
 	function validarContrasena() {
 		var pass = __('contrasena').value, pass2 = __('contrasena2').value;
 		if (pass != '' && pass2 != '') {
 			if (pass != pass2) {
 				//si las contraseñas no coinciden
-				__('resultado').innerHTML = '<p class="error"><strong>Error: </strong>¡Las contraseñas no coinciden!</p>';
+				__('resultado').innerHTML = '<p class="error"><strong>Error: </strong>�Las contrase�as no coinciden!</p>';
 			} else {
 				//Si todo esta correcto 
 				document.getElementById("registro").submit();
 			}
 		} else {
 			//si los campos o uno, este vacio
-			__('resultado').innerHTML = '<p class="error"><strong>Error: </strong>¡Los campos no deben estar vacios!</p>';
+			__('resultado').innerHTML = '<p class="error"><strong>Error: </strong>�Los campos no deben estar vacios!</p>';
 		}
 	}
 
 	//enviar formulario con la tecla ENTER
 	function enterEnviar(event) {
 		if (event.keyCode == 13) {
-			validarContraseña()
+			validarContrasena()
 		}
 	}
 </script>
@@ -83,11 +91,12 @@
 			<h2>
 				SnowMedia<br> Pagina de registro
 			</h2>
-			<p>Introduce tu usuario, o contraseña para acceder, o registrate</p>
+			<p>Introduce tu usuario, o contrase�a para acceder, o registrate</p>
 
 
 		</div>
 		<br> <br> <br>
+
 		<!-- Carrusel de imagenes -->
 		<div class="login-main">
 			<div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -154,8 +163,8 @@
 							required>
 					</div>
 					<div id="login" class="form-group">
-						<label>Contraseña</label> <input type="password"
-							class="form-control" placeholder="Contraseña" name="passwd"
+						<label>Contrase�a</label> <input type="password"
+							class="form-control" placeholder="Contrase�a" name="passwd"
 							required>
 					</div>
 					<input type="hidden" name="action" value="1" />
@@ -164,7 +173,7 @@
 						onclick="visualiza_registro()">Registro</button>
 				</form>
 
-				<!-- FORMULARIO DE REGISTRO 1 -->
+				<!-- FORMULARIO DE REGISTRO  -->
 				<form id="registro" style="visibility: hidden; display: none;"
 					action="controladorproyecto" method="post">
 					<div class="form-group">
@@ -180,13 +189,13 @@
 					</div>
 					<div class="form-group">
 						<label>Contraseña*</label> <input id="contrasena" type="password"
-							class="form-control" placeholder="Contraseña*" onkeyup="check();"
+							class="form-control" placeholder="Contrase�a*" onkeyup="check();"
 							name="clave" required>
 					</div>
 					<div class="form-group">
-						<label>Repetir contraseña</label> <input id="contrasena2"
+						<label>Repetir contrase�a</label> <input id="contrasena2"
 							type="password" class="form-control"
-							placeholder="Repetir contraseña" onkeyup="check();" required>
+							placeholder="Repetir contrase�a" onkeyup="check();" required>
 					</div>
 					<div id="resultado"></div>
 					<input type="hidden" name="action" value="2" />
@@ -198,5 +207,6 @@
 			</div>
 		</div>
 	</div>
+
 </body>
 </html>

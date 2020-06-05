@@ -251,7 +251,6 @@ public class crud {
 			
 			while (rs.next()) {
 				videos = new contenidos();
-		
 				videos.setId_contenido(rs.getInt("id_contenido"));
 				videos.setNombre(rs.getString("nombre"));
 				videos.setUrl(rs.getString("url"));
@@ -282,7 +281,7 @@ public class crud {
 		
 		for (i=0; i<arr.length;i++) {
 			arr[i]=(int)(Math.random()*rango);
-			System.out.println(i+" " +arr[i]);
+		
 			for (int j=0; j<i; j++) {
 				if (arr[i]== arr[j]) {
 					i--;

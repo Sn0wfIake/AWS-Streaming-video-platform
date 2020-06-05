@@ -9,7 +9,7 @@
 <title>SnowMediaLogin</title>
 </head>
 <body>
-	<!-- Me traigo al usuario -->
+
 	<%
 	ArrayList<usuarios> listaU = (ArrayList<usuarios>) request.getAttribute("listaU");
 	ArrayList<contenidos> listaC = (ArrayList<contenidos>) request.getAttribute("listaC");
@@ -17,36 +17,40 @@
 	int arr2[] = (int[]) request.getAttribute("recoserie");
 	int arr[] = (int[]) request.getAttribute("nums");
 	String user = "";
+
+		
+
 	
 
 	if (listaU.isEmpty()) {
 		out.println("Error an el login, intentalo de nuevo");
+		
 	%>
-	
+
 	<p>
-		<a href="index.html">Volver a logearte</a>
+		<a href="index.jsp">Volver a logearte</a>
 	</p>
 	<%
 		} else {
-		for (usuarios u : listaU) {
+			for (usuarios u: listaU){
 			HttpSession miSesion = request.getSession();
-			miSesion.setAttribute("Usuario", u.getNombre());
-			user = (String) session.getAttribute("Usuario");
-
-		}
-	%>
+			user = (String) session.getAttribute("name");
+			
+			}
+		
+			%>
 
 
 	<title>Inicio Snowmedia</title>
 
 	<!-- Bootstrap CSS CDN -->
-	
+
 	<link rel="stylesheet"
 		href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
 		integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
 		crossorigin="anonymous">
 	<!-- Our Custom CSS -->
-	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="css/style.css">
 	<!-- Scrollbar Custom CSS -->
 	<link rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
@@ -88,9 +92,10 @@
 							data-toggle="collapse" aria-expanded="false"
 							class="dropdown-toggle collapsed">Catalogo</a>
 							<ul class="list-unstyled collapse" id="homeSubmenu" style="">
-								<li><a href="#">Peliculas</a></li>
-								<li><a href="#">Series/Videos</a></li>
-								<li><a href="#">Musica</a></li>
+								<li><a
+									href="controladorproyecto?action=3&demandado=peliculas">Peliculas</a></li>
+								<li><a href="controladorproyecto?action=3&demandado=series">Series/Videos</a></li>
+								<li><a href="controladorproyecto?action=3&demandado=musica">Musica</a></li>
 							</ul></li>
 
 						<li><a href="#">Mi perfil</a></li>
@@ -157,10 +162,11 @@
 						<ul class="nav navbar-nav ml-auto">
 							<li class="nav-item active"><a class="nav-link" href="#">Inicio</a>
 							</li>
-							<li class="nav-item"><a class="nav-link" href="#">Mi
+							<li class="nav-item"><a class="nav-link"
+								href="controladorproyecto?action=3&demandado=musica">Mi
 									perfil </a></li>
-							<li class="nav-item"><a class="nav-link" href="#">Catalogo
-									completo</a></li>
+							<li class="nav-item"><a class="nav-link"
+								href="index.jsp?cerrar=true">Cerrar sesion</a></li>
 
 						</ul>
 					</div>
@@ -210,7 +216,7 @@
 					</section>
 					<section id="s3">
 						<a class="arrow__btn" href="#s2"><</a>
-					<%
+						<%
 							for (int i = 10; i < 15; i++) {
 							out.println("<div class=\"item\">");
 							out.println("<button type=\"\" data-toggle=\"modal\" data-target=\"#exampleModal\"><img src=\""
@@ -229,8 +235,8 @@
 
 				<div class="wrapper2" id="brand">
 					<section id="ss1">
-					<a class="arrow__btn" href="#ss3"><</a>
-					<%
+						<a class="arrow__btn" href="#ss3"><</a>
+						<%
 							for (int i = 0; i < 5; i++) {
 							out.println("<div class=\"item\">");
 							out.println("<button type=\"\" data-toggle=\"modal\" data-target=\"#exampleModal\"><img src=\""
@@ -243,7 +249,7 @@
 					</section>
 					<section id="ss2">
 						<a class="arrow__btn" href="#ss1"><</a>
-					<%
+						<%
 							for (int i = 5; i < 10; i++) {
 							out.println("<div class=\"item\">");
 							out.println("<button type=\"\" data-toggle=\"modal\" data-target=\"#exampleModal\"><img src=\""
@@ -314,30 +320,34 @@
             });
         });
     </script>
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel"></h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">                    
-                    <div class="embed-responsive embed-responsive-4by3">
-					<iframe id="iframeVideo" width="720px" height="1080px" src="" frameborder="0"  encrypted-media" allowfullscreen></iframe>
-					
-                      </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal" >Cerrar</button>
-            
-            </div>
-          </div>
-        </div>
-      </div>
-	  
-	   <script type="text/javascript">
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-xl" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel"></h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="embed-responsive embed-responsive-4by3">
+						<iframe id="iframeVideo" width="720px" height="1080px" src=""
+							frameborder="0" encrypted-media" allowfullscreen></iframe>
+
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Cerrar</button>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
       //Url del video a reproducir
       var videoSrc='https://proyectofinalamm.s3.eu-west-3.amazonaws.com/sonido/Always+Somewhere+(2015+Remaster).mp4';
      //BUSCO LA CANCION A REPRODUCIR
@@ -348,7 +358,7 @@
           ckEdiloop.addEventListener("click", function(el){
               thisSrc = this.title;
               var ckEdImg = '<p><img src="'+thisSrc+'" /></p>'; // La forma como las imágenes son envueltas en ckEditor
-              alert('wl video es = ' + thisSrc);
+             
               document.getElementById("exampleModalLabel").innerHTML = thisSrc;
               videoSrc=document.getElementById(thisSrc).value;
               // CKEDITOR.instances['mi_textarea'].insertHtml(ckEdImg) // Añade img al editor
@@ -377,7 +387,7 @@
       
       
     </script>
-    <script type="text/javascript">
+	<script type="text/javascript">
   /*  var brandImg = document.querySelectorAll("#brand img");
 
     for (var i = 0; i < brandImg.length; i++) {

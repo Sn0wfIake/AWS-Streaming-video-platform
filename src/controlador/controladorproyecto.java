@@ -32,14 +32,25 @@ public class controladorproyecto extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
+		doPost(request, response);
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
+
 		int action = Integer.parseInt(request.getParameter("action"));
 		String clave;
 		String login;
 		switch (action) {
-		case 1: // iniciar sesion
+		case 1: 
+			
+			
+			// iniciar sesion
 			login = request.getParameter("user");
 			clave = request.getParameter("passwd");
-			System.out.println(login+" "+clave);
+			System.out.println(login + " " + clave);
 			try {
 				iniciases(request, response, login, clave);
 			} catch (ClassNotFoundException | SQLException | ServletException | IOException e1) {
@@ -52,11 +63,11 @@ public class controladorproyecto extends HttpServlet {
 			login = request.getParameter("nombre");
 			clave = request.getParameter("clave");
 			usuarios u = new usuarios();
-			usuarios e = new usuarios(1000, "klk", "pepe", "juan");
+
 			u.setContrasena((String) (request.getParameter("clave")));
 			u.setCorreo((String) request.getParameter("correo"));
 			u.setNombre((String) request.getParameter("nombre"));
-			System.out.println(e.toString());
+
 			System.out.println("usuario " + u.toString());
 			System.out.println(login + " " + clave);
 			try {
@@ -69,82 +80,95 @@ public class controladorproyecto extends HttpServlet {
 				System.out.println("error en la 1º parte");
 			}
 			break;
-		}
+		case 3:
+			String requerido = (request.getParameter("demandado"));
 
-	}
+			switch (requerido) {
+			case "musica":
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
+				break;
 
-	/*
-	 * private void mostrar(HttpServletRequest request, HttpServletResponse
-	 * response) throws ServletException, IOException{ ABMC ai = new ABMC();
-	 * //implementamos la clase altas bajas modificaciones y consultas ArrayList
-	 * <Articulo> listaArticulos = ai.mostrar(); //mostrar devuelve un arraylist de
-	 * articulos que guardaremos en listaArticulos
-	 * 
-	 * request.setAttribute("listaA", listaArticulos); //creamos el atributo listaA
-	 * para usarlo en el despliegue RequestDispatcher dispatcher =
-	 * request.getRequestDispatcher("/despliegaArticulos.jsp"); //llevamos la
-	 * informacion al despliegue dispatcher.forward(request, response);
-	 * 
-	 * }
-	 */
+			case "peliculas":
 
-	/*
-	 * private void elimina(HttpServletRequest request, HttpServletResponse
-	 * response, String nb) throws ServletException, IOException{ ABMC ai = new
-	 * ABMC(); int ok=ai.eliminar(nb);
-	 * request.setAttribute("ok",String.valueOf(ok)); RequestDispatcher dispatcher =
-	 * request.getRequestDispatcher("/despliegaOk.jsp"); dispatcher.forward(request,
-	 * response);
-	 * 
-	 * }
-	 * 
-	 * private void insertar(HttpServletRequest request, HttpServletResponse
-	 * response,Articulo a)throws ServletException, IOException,SQLException { int
-	 * ok; ABMC ai = new ABMC(); ok=ai.insertar(a);
-	 * request.setAttribute("ok",String.valueOf(ok)); RequestDispatcher dispatcher =
-	 * request.getRequestDispatcher("/despliegaOk.jsp"); dispatcher.forward(request,
-	 * response); }
-	 */
-	private void iniciases(HttpServletRequest request,HttpServletResponse response, String login, String clave) throws ClassNotFoundException, SQLException, ServletException, IOException {
-		ArrayList <usuarios> lista;
-		ArrayList <contenidos> videos,series;
-		crud ai = new crud();
-		videos=ai.listaContenido();
-		series=ai.listaSeries();
-		
-		lista = ai.identificarP(login, clave);
-		int [] nums= ai.listaRecomendaciones(videos);
-		int [] recoserie= ai.listaRecomendaciones(series);
-			request.setAttribute("listaU", lista);
-			request.setAttribute("listaC", videos);
-			request.setAttribute("listaS", series);
-			request.setAttribute("nums", nums);
-			request.setAttribute("recoserie", recoserie);
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/main.jsp");
+				break;
+
+			case "series":
+
+				break;
+
+			}
+
+			request.setAttribute("requerido", requerido);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/expositor.jsp");
 			dispatcher.forward(request, response);
-		
-		
+			break;
+
+		}
 	}
 
-	
-	
+	private void iniciases(HttpServletRequest request, HttpServletResponse response, String login, String clave)
+			throws ClassNotFoundException, SQLException, ServletException, IOException {
+		ArrayList<usuarios> lista;
+		ArrayList<contenidos> videos, series;
+		crud ai = new crud();
+		
+		//Lista de series y lista del contenido
+		videos = ai.listaContenido();
+		series = ai.listaSeries();
+		
+		//Sesion del usuario
+		HttpSession session = request.getSession();
+		
+		session.setAttribute("name", login);
+		//Miro si el user esta en la db
+		lista = ai.identificarP(login, clave);
+		
+		//Saco 15 recomendaciones aleatorias
+		int[] nums = ai.listaRecomendaciones(videos);
+		int[] recoserie = ai.listaRecomendaciones(series);
+		
+		//Envio todos los parametros para el main
+		request.setAttribute("listaU", lista);
+		request.setAttribute("listaC", videos);
+		request.setAttribute("listaS", series);
+		request.setAttribute("nums", nums);
+		request.setAttribute("recoserie", recoserie);
+		
+		//Redirijo al main
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/main.jsp");
+		dispatcher.forward(request, response);
+
+	}
+
 	private void nuevoUsu(HttpServletRequest request, HttpServletResponse response, usuarios u)
 			throws ServletException, IOException, ClassNotFoundException {
 		System.out.println("insertando el nuevo PUTO usuario");
 		System.out.println(u.toString());
 		int ok;
-		
+
 		crud ai = new crud();
 		ok = ai.nuevoUsu(u);
-		
+
 		request.setAttribute("ok", String.valueOf(ok));
-		if (ok==0) {
+		if (ok == 0) {
+			
+			ArrayList<contenidos> videos, series;
+			 ai = new crud();
+			
+			//Lista de series y lista del contenido
+			videos = ai.listaContenido();
+			series = ai.listaSeries();
+			//Saco 15 recomendaciones aleatorias
+			int[] nums = ai.listaRecomendaciones(videos);
+			int[] recoserie = ai.listaRecomendaciones(series);
+			
+			//Envio todos los parametros para el main
+		
+			request.setAttribute("listaC", videos);
+			request.setAttribute("listaS", series);
+			request.setAttribute("nums", nums);
+			request.setAttribute("recoserie", recoserie);
 			request.setAttribute("user", u.getNombre());
 		}
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/registrocompleto.jsp");
