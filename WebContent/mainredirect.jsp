@@ -11,8 +11,7 @@
 <body>
 
 	<%
-	ArrayList<usuarios> listaU = (ArrayList<usuarios>) request.getAttribute("listaU");
-	System.out.println("Denrto de jsp "+listaU);
+	
 	
 	ArrayList<contenidos> listaC = (ArrayList<contenidos>) request.getAttribute("listaC");
 	System.out.println("Denrto de jsp 1 "+listaC);
@@ -24,29 +23,14 @@
 	System.out.println("Denrto de jsp 3 "+arr.length);
 	String user = "";
 
-		
+	//Si cuando la pagina se vuelve a cargar, le enviamos la sesion que tenga, y accede a su contenido	
 
-	
-if (listaU.isEmpty()) {
-		out.println("Error an el login, intentalo de nuevo");
-		
+	HttpSession miSesion = request.getSession();
+	user = (String) session.getAttribute("name");
 	%>
 
-	<p>
-		<a href="index.jsp">Volver a logearte</a>
-	</p>
-	<%
-		} else {
-			for (usuarios u: listaU){
-			HttpSession miSesion = request.getSession();
-			user = (String) session.getAttribute("name");
-			
-			}
-		
-			%>
-
-
-	<title>Inicio Snowmedia</title>
+	
+		<title>Inicio Snowmedia</title>
 
 	<!-- Bootstrap CSS CDN -->
 
@@ -167,7 +151,7 @@ if (listaU.isEmpty()) {
 						<ul class="nav navbar-nav ml-auto">
 							
 							<li class="nav-item active"><a class="nav-link"
-								href="controladorproyecto?action=3&demandado=musica">Mi
+								href="">Mi
 									perfil </a></li>
 							<li class="nav-item"><a class="nav-link"
 								href="index.jsp?cerrar=true">Cerrar sesion</a></li>
@@ -361,16 +345,16 @@ if (listaU.isEmpty()) {
           var ckEdiloop = brandImg[i];
           ckEdiloop.addEventListener("click", function(el){
               thisSrc = this.title;
-              var ckEdImg = '<p><img src="'+thisSrc+'" /></p>'; // La forma como las im√°genes son envueltas en ckEditor
+              var ckEdImg = '<p><img src="'+thisSrc+'" /></p>'; // La forma como las im·genes son envueltas en ckEditor
              
               document.getElementById("exampleModalLabel").innerHTML = thisSrc;
               videoSrc=document.getElementById(thisSrc).value;
-              // CKEDITOR.instances['mi_textarea'].insertHtml(ckEdImg) // A√±ade img al editor
+              // CKEDITOR.instances['mi_textarea'].insertHtml(ckEdImg) // AÒade img al editor
           });
       }
       console.log(thisSrc);
-      //Al abrir la ventana modal, le agregu√© autoplay igual a 1, para que se reproduzca
-      //autom√°ticamente, en caso de que no se requiera la autoreproducci√≥n, se quita 
+      //Al abrir la ventana modal, le agreguÈ autoplay igual a 1, para que se reproduzca
+      //autom·ticamente, en caso de que no se requiera la autoreproducciÛn, se quita 
       //esa parte "?autoplay=1".
       $('#exampleModal').on('show.bs.modal', function () {  
         var iframe=$('#iframeVideo');
@@ -378,8 +362,8 @@ if (listaU.isEmpty()) {
       });
 
       //Al cerrar la ventana modal, solamente reasignamos el video al atributo del iframe
-      //y eso ocasiona que se detenga la reproducci√≥n del archivo,
-      //aunque tambi√©n podr√≠amos haber dejado el valor src en null. :)
+      //y eso ocasiona que se detenga la reproducciÛn del archivo,
+      //aunque tambiÈn podrÌamos haber dejado el valor src en null. :)
       $('#exampleModal').on('hidden.bs.modal', function (e) {
         src="null";
 		
@@ -398,14 +382,15 @@ if (listaU.isEmpty()) {
         var ckEdiloop = brandImg[i];
         ckEdiloop.addEventListener("click", function(el){
             var thisSrc = this.src;
-            var ckEdImg = '<p><img src="'+thisSrc+'" /></p>'; // La forma como las im√°genes son envueltas en ckEditor
+            var ckEdImg = '<p><img src="'+thisSrc+'" /></p>'; // La forma como las im·genes son envueltas en ckEditor
             alert('img src es = ' + thisSrc);
-            // CKEDITOR.instances['mi_textarea'].insertHtml(ckEdImg) // A√±ade img al editor
+            // CKEDITOR.instances['mi_textarea'].insertHtml(ckEdImg) // AÒade img al editor
         });
     }*/
     </script>
 
-	<%}%>
+	
+
+
 
 </body>
-</html>

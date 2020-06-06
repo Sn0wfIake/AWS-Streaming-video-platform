@@ -44,9 +44,8 @@ public class controladorproyecto extends HttpServlet {
 		String clave;
 		String login;
 		switch (action) {
-		case 1: 
-			
-			
+		case 1:
+
 			// iniciar sesion
 			login = request.getParameter("user");
 			clave = request.getParameter("passwd");
@@ -82,60 +81,99 @@ public class controladorproyecto extends HttpServlet {
 			break;
 		case 3:
 			String requerido = (request.getParameter("demandado"));
-
+			crud ai = new crud();
+			ArrayList<contenidos> listado = null;
 			switch (requerido) {
 			case "musica":
-
+				listado = ai.listaMusica();
 				break;
 
 			case "peliculas":
-
+				listado = ai.listaPelis();
 				break;
 
 			case "series":
-
+				listado = ai.listaSeries();
 				break;
 
 			}
-
+			request.setAttribute("listaC", listado);
 			request.setAttribute("requerido", requerido);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/expositor.jsp");
 			dispatcher.forward(request, response);
 			break;
+		// Volver al index desde cualquier pag
 
+		case 4:
+			devuelvemain(request, response);
+		
+			// Redirijo al main
+
+			
+			break;
 		}
 	}
 
-	private void iniciases(HttpServletRequest request, HttpServletResponse response, String login, String clave)
-			throws ClassNotFoundException, SQLException, ServletException, IOException {
-		ArrayList<usuarios> lista;
+	private void devuelvemain(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		ArrayList<contenidos> videos, series;
-		crud ai = new crud();
-		
-		//Lista de series y lista del contenido
-		videos = ai.listaContenido();
-		series = ai.listaSeries();
-		
-		//Sesion del usuario
+		crud ai1 = new crud();
 		HttpSession session = request.getSession();
-		
-		session.setAttribute("name", login);
-		//Miro si el user esta en la db
-		lista = ai.identificarP(login, clave);
-		
-		//Saco 15 recomendaciones aleatorias
-		int[] nums = ai.listaRecomendaciones(videos);
-		int[] recoserie = ai.listaRecomendaciones(series);
-		
-		//Envio todos los parametros para el main
-		request.setAttribute("listaU", lista);
+		String name = (String) session.getAttribute("name");
+		session.setAttribute("name", name);
+		// Lista de series y lista del contenido
+		videos = ai1.listaContenido();
+		series = ai1.listaSeries();
+
+		// Sesion del usuario
+
+		// Saco 15 recomendaciones aleatorias
+		int[] nums = ai1.listaRecomendaciones(videos);
+		int[] recoserie = ai1.listaRecomendaciones(series);
+		System.out.println("He acabado esto");
+		// Envio todos los parametros para el main
+
 		request.setAttribute("listaC", videos);
 		request.setAttribute("listaS", series);
 		request.setAttribute("nums", nums);
 		request.setAttribute("recoserie", recoserie);
-		
-		//Redirijo al main
-		
+
+		// Redirijo al main
+
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/mainredirect.jsp");
+		dispatcher.forward(request, response);
+	}
+
+	private void iniciases(HttpServletRequest request, HttpServletResponse response, String login, String clave)
+			throws ClassNotFoundException, SQLException, ServletException, IOException {
+		ArrayList<usuarios> listaU;
+		ArrayList<contenidos> videos, series;
+		crud ai = new crud();
+		listaU=ai.identificarP(login, clave);
+		// Lista de series y lista del contenido
+		videos = ai.listaContenido();
+		series = ai.listaSeries();
+
+		// Sesion del usuario
+		HttpSession session = request.getSession();
+
+		session.setAttribute("name", login);
+		// Miro si el user esta en la db
+	
+
+		// Saco 15 recomendaciones aleatorias
+		int[] nums = ai.listaRecomendaciones(videos);
+		int[] recoserie = ai.listaRecomendaciones(series);
+
+		// Envio todos los parametros para el main
+		request.setAttribute("listaU", listaU);
+		request.setAttribute("listaC", videos);
+		request.setAttribute("listaS", series);
+		request.setAttribute("nums", nums);
+		request.setAttribute("recoserie", recoserie);
+
+		// Redirijo al main
+
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/main.jsp");
 		dispatcher.forward(request, response);
 
@@ -152,19 +190,19 @@ public class controladorproyecto extends HttpServlet {
 
 		request.setAttribute("ok", String.valueOf(ok));
 		if (ok == 0) {
-			
+
 			ArrayList<contenidos> videos, series;
-			 ai = new crud();
-			
-			//Lista de series y lista del contenido
+			ai = new crud();
+
+			// Lista de series y lista del contenido
 			videos = ai.listaContenido();
 			series = ai.listaSeries();
-			//Saco 15 recomendaciones aleatorias
+			// Saco 15 recomendaciones aleatorias
 			int[] nums = ai.listaRecomendaciones(videos);
 			int[] recoserie = ai.listaRecomendaciones(series);
-			
-			//Envio todos los parametros para el main
-		
+
+			// Envio todos los parametros para el main
+
 			request.setAttribute("listaC", videos);
 			request.setAttribute("listaS", series);
 			request.setAttribute("nums", nums);

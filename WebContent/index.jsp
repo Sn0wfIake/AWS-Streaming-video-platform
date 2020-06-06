@@ -81,7 +81,7 @@ if (request.getParameter("cerrar")!=null){
 	}
 </script>
 
-<title>SnowMedia 1.3 Logins</title>
+<title>SnowMedia 1.8 Redirecciones</title>
 </head>
 <body>
 
@@ -188,7 +188,7 @@ if (request.getParameter("cerrar")!=null){
 							name="nombre" required>
 					</div>
 					<div class="form-group">
-						<label>ContraseÃ±a*</label> <input id="contrasena" type="password"
+						<label>Contraseña*</label> <input id="contrasena" type="password"
 							class="form-control" placeholder="Contraseña*" onkeyup="check();"
 							name="clave" required>
 					</div>
