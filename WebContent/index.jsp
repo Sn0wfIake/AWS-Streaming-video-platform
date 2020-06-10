@@ -5,10 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <%
-if (request.getParameter("cerrar")!=null){
+
 	session.invalidate();
 
-}
+
 %>
 <link
 	href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -81,7 +81,7 @@ if (request.getParameter("cerrar")!=null){
 	}
 </script>
 
-<title>SnowMedia 1.8 Redirecciones</title>
+<title>SnowMedia</title>
 </head>
 <body>
 

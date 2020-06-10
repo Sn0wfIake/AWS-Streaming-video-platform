@@ -83,7 +83,7 @@ int arr= listaC.size();
                     </ul>
                 </li>
                 <li>
-                    <a href="#">Mi perfil</a>
+                    <a href="controladorproyecto?action=5">Mi perfil</a>
                     <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Lista de favoritos</a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
                         <li>
@@ -121,7 +121,7 @@ int arr= listaC.size();
 							
 							</li>
 							<li class="nav-item"><a class="nav-link"
-								href="controladorproyecto?action=3&demandado=musica">Mi
+								href="controladorproyecto?action=5">Mi
 									perfil </a></li>
 							<li class="nav-item"><a class="nav-link"
 								href="index.jsp?cerrar=true">Cerrar sesion</a></li>

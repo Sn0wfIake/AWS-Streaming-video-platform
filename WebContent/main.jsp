@@ -6,7 +6,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>SnowMediaLogin</title>
+<title>Pagina principal</title>
 </head>
 <body>
 
@@ -46,7 +46,7 @@ if (listaU.isEmpty()) {
 			%>
 
 
-	<title>Inicio Snowmedia</title>
+	
 
 	<!-- Bootstrap CSS CDN -->
 
@@ -103,7 +103,7 @@ if (listaU.isEmpty()) {
 								<li><a href="controladorproyecto?action=3&demandado=musica">Musica</a></li>
 							</ul></li>
 
-						<li><a href="#">Mi perfil</a></li>
+						<li><a href="controladorproyecto?action=5">Mi perfil</a></li>
 						<li><a href="#pageSubmenu" data-toggle="collapse"
 							aria-expanded="false" class="dropdown-toggle">Lista de
 								favoritos</a>
@@ -167,7 +167,7 @@ if (listaU.isEmpty()) {
 						<ul class="nav navbar-nav ml-auto">
 							
 							<li class="nav-item active"><a class="nav-link"
-								href="controladorproyecto?action=3&demandado=musica">Mi
+								href="controladorproyecto?action=5">Mi
 									perfil </a></li>
 							<li class="nav-item"><a class="nav-link"
 								href="index.jsp?cerrar=true">Cerrar sesion</a></li>

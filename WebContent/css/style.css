@@ -49,6 +49,9 @@ a, a:hover, a:focus {
 	border-bottom: 1px dashed #ddd;
 	margin: 40px 0;
 }
+.barritadenavegacion{
+	font-family: 'Poppins';
+}
 
 /* ---------------------------------------------------
     SIDEBAR STYLE

@@ -27,7 +27,16 @@
 
 	HttpSession miSesion = request.getSession();
 	user = (String) session.getAttribute("name");
+	if(user==null){
+		out.println("Error an el login, intentalo de nuevo");
+		
 	%>
+
+	<p>
+		<a href="index.jsp">Volver a logearte</a>
+	</p><%
+	}else{%>
+	
 
 	
 		<title>Inicio Snowmedia</title>
@@ -87,7 +96,7 @@
 								<li><a href="controladorproyecto?action=3&demandado=musica">Musica</a></li>
 							</ul></li>
 
-						<li><a href="#">Mi perfil</a></li>
+						<li><a href="controladorproyecto?action=5">Mi perfil</a></li>
 						<li><a href="#pageSubmenu" data-toggle="collapse"
 							aria-expanded="false" class="dropdown-toggle">Lista de
 								favoritos</a>
@@ -151,7 +160,7 @@
 						<ul class="nav navbar-nav ml-auto">
 							
 							<li class="nav-item active"><a class="nav-link"
-								href="">Mi
+								href="controladorproyecto?action=5">Mi
 									perfil </a></li>
 							<li class="nav-item"><a class="nav-link"
 								href="index.jsp?cerrar=true">Cerrar sesion</a></li>
@@ -390,7 +399,8 @@
     </script>
 
 	
-
+<%} %>
 
 
 </body>
+</html>
