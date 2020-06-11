@@ -10,34 +10,30 @@ import java.util.ArrayList;
 import objetos.*;
 
 public class crud {
+	// Identifico al usuario que entra en el login
 	public ArrayList<usuarios> identificarP(String login, String clave) throws SQLException, ClassNotFoundException {
 
 		ArrayList<usuarios> lista = new ArrayList<usuarios>();
 
 		try {
-			Connection con = null;// Conexion
+			Connection con = null;
 			con = conexion.conectar();
-			PreparedStatement sentencia;// Sentencia PREPARADA
-			ResultSet rs = null;// Guardar resultado
-
+			PreparedStatement sentencia;
+			ResultSet rs = null;
 			usuarios u = new usuarios();
 
 			String sql = "SELECT * FROM usuarios WHERE nombre LIKE ? AND contrasena LIKE ?";
 			sentencia = con.prepareStatement(sql);
 
-			// Vincula los parametros a la sentencia
 			sentencia.setString(1, login);
-			System.out.println(login);
-			sentencia.setString(2, clave);
-			System.out.println(clave);
-			System.out.println(sentencia);
 
-			rs = sentencia.executeQuery();// Guarda del resultado de la sentecia
+			sentencia.setString(2, clave);
+
+			rs = sentencia.executeQuery();
 
 			while (rs.next()) {
 
 				u = new usuarios();
-				// inserto datos a Usuario con los datos de la query
 
 				u.setContrasena(rs.getString("contrasena"));
 
@@ -51,23 +47,23 @@ public class crud {
 
 		} catch (SQLException exc) {
 			exc.getStackTrace();
-			System.out.println(exc);
-			System.out.println("Sentencia fallida");
+
 		}
 		return lista;
 
 	}
 
+	// Cuenta a todos los usuarios de la bd
 	public int cuentausu() throws ClassNotFoundException {
 		int numusu = 0;
 		try {
-			Connection con = null;// Conexion
+			Connection con = null;
 			con = conexion.conectar();
-			PreparedStatement sentencia;// Sentencia PREPARADA
-			ResultSet rs = null;// Guardar resultado
+			PreparedStatement sentencia;
+			ResultSet rs = null;
 			String sql = "SELECT COUNT(nombre) FROM usuarios";
 			sentencia = con.prepareStatement(sql);
-			System.out.println(sentencia);
+
 			rs = sentencia.executeQuery();
 			while (rs.next()) {
 				numusu = rs.getInt(1);
@@ -75,12 +71,13 @@ public class crud {
 		} catch (SQLException exc) {
 			exc.getStackTrace();
 			System.out.println(exc);
-			System.out.println("Sentencia fallida");
+
 		}
 
 		return numusu;
 	}
 
+//Insercion de un nuevo usuario
 	public int nuevoUsu(usuarios u) throws ClassNotFoundException {
 		Connection con = null;
 		Statement sentencia = null;
@@ -90,11 +87,11 @@ public class crud {
 		sql += u.getNombre() + "','";
 		sql += u.getCorreo() + "','";
 		sql += u.getContrasena() + "')";
-		System.out.println(sql);
+
 		try {
-			System.out.println("dentro del try nuevousu");
+
 			con = conexion.conectar();
-			System.out.println(con);
+
 			sentencia = con.createStatement();
 			ok = sentencia.executeUpdate(sql);
 			sentencia.close();
@@ -103,11 +100,11 @@ public class crud {
 
 			ex.getStackTrace();
 		}
-		System.out.println("despues de todo");
-		System.out.println(ok);
+
 		return ok;
 	}
 
+//Listo todos los contenidos de la bd
 	public ArrayList<contenidos> listaContenido() {
 		Connection con = null; // Creamos la conexion
 		Statement sentencia = null; // Creamos la sentencia
@@ -117,7 +114,6 @@ public class crud {
 
 		contenidos videos;
 		String sql = "SELECT * FROM contenidos";
-		System.out.println(sql);
 
 		try {
 			con = conexion.conectar();
@@ -134,13 +130,13 @@ public class crud {
 				listaA.add(videos);
 
 			}
-			System.out.println(listaA);
+
 			rs.close();
 			sentencia.close();
 			con.close();
 
 		} catch (Exception exc) {
-			System.out.println(exc);
+
 			exc.getStackTrace();
 		}
 
@@ -148,6 +144,7 @@ public class crud {
 
 	}
 
+// 3 Metodos, para obtener una lista de series, una de musica y otra de pelis
 	public ArrayList<contenidos> listaSeries() {
 		Connection con = null; // Creamos la conexion
 		Statement sentencia = null; // Creamos la sentencia
@@ -157,7 +154,6 @@ public class crud {
 
 		contenidos videos;
 		String sql = "SELECT * FROM `contenidos` WHERE `tipo` = 'serie'";
-		System.out.println(sql);
 
 		try {
 			con = conexion.conectar();
@@ -174,16 +170,16 @@ public class crud {
 				listaS.add(videos);
 
 			}
-			System.out.println(listaS);
+
 			rs.close();
 			sentencia.close();
 			con.close();
 
 		} catch (Exception exc) {
-			System.out.println(exc);
+
 			exc.getStackTrace();
 		}
-		System.out.println(listaS);
+
 		return listaS;
 
 	}
@@ -197,7 +193,6 @@ public class crud {
 
 		contenidos videos;
 		String sql = "SELECT * FROM `contenidos` WHERE `tipo` = 'musica'";
-		System.out.println(sql);
 
 		try {
 			con = conexion.conectar();
@@ -214,7 +209,7 @@ public class crud {
 				listaM.add(videos);
 
 			}
-			System.out.println(listaM);
+
 			rs.close();
 			sentencia.close();
 			con.close();
@@ -229,15 +224,14 @@ public class crud {
 	}
 
 	public ArrayList<contenidos> listaPelis() {
-		Connection con = null; // Creamos la conexion
-		Statement sentencia = null; // Creamos la sentencia
-		ResultSet rs = null; // Contenedor de la sentencia
+		Connection con = null;
+		Statement sentencia = null;
+		ResultSet rs = null;
 
 		ArrayList<contenidos> listaP = new ArrayList<contenidos>();
 
 		contenidos videos;
 		String sql = "SELECT * FROM `contenidos` WHERE `tipo` = 'pelicula'";
-		System.out.println(sql);
 
 		try {
 			con = conexion.conectar();
@@ -253,7 +247,7 @@ public class crud {
 				listaP.add(videos);
 
 			}
-			System.out.println(listaP);
+
 			rs.close();
 			sentencia.close();
 			con.close();
@@ -267,6 +261,7 @@ public class crud {
 
 	}
 
+//Genero 15 Aleatorios distintos, para la lista de recomendaciones del banner
 	public static int[] listaRecomendaciones(ArrayList<contenidos> a) {
 		int i = 0;
 		int rango = a.size();
@@ -285,8 +280,9 @@ public class crud {
 		return arr;
 	}
 
+	// Saco la miniatura de los videos
 	public static String devuelveVideo(String url) throws SQLException {
-		Connection con = null; // Creamos la conexion
+		Connection con = null;
 		Statement sentencia = null;
 		ResultSet rs = null;
 		String video = null;
@@ -294,7 +290,6 @@ public class crud {
 		sentencia = con.prepareStatement(sql);
 
 		((PreparedStatement) sentencia).setString(1, url);
-		System.out.println(url);
 
 		rs = sentencia.executeQuery(sql);
 
@@ -313,33 +308,30 @@ public class crud {
 
 	}
 
+//Identifico al usuario segun su sesion
 	public ArrayList<usuarios> identificarP(String usu) throws ClassNotFoundException {
 
 		ArrayList<usuarios> lista = new ArrayList<usuarios>();
 
 		try {
-			Connection con = null;// Conexion
+			Connection con = null;
 			con = conexion.conectar();
-			PreparedStatement sentencia;// Sentencia PREPARADA
-			ResultSet rs = null;// Guardar resultado
+			PreparedStatement sentencia;
+			ResultSet rs = null;
 
 			usuarios u = new usuarios();
 
 			String sql = "SELECT * FROM usuarios WHERE nombre LIKE ? ";
 			sentencia = con.prepareStatement(sql);
 
-			// Vincula los parametros a la sentencia
 			sentencia.setString(1, usu);
-			System.out.println(usu);
 
-			System.out.println(sentencia);
-
-			rs = sentencia.executeQuery();// Guarda del resultado de la sentecia
+			rs = sentencia.executeQuery();
 
 			while (rs.next()) {
 
 				u = new usuarios();
-				// inserto datos a Usuario con los datos de la query
+
 				u.setId_usuario(rs.getInt("id_usuario"));
 				u.setContrasena(rs.getString("contrasena"));
 				u.setCorreo(rs.getString("correo"));
@@ -354,15 +346,15 @@ public class crud {
 		} catch (SQLException exc) {
 			exc.getStackTrace();
 			System.out.println(exc);
-			System.out.println("Sentencia fallida");
+
 		}
 		return lista;
 
 	}
 
+//Para actualizar cualquiera de los campos, tengo 3 metodos, para cambiar nombre, contraseña o correo
 	public int actualizaNombre(usuarios u) throws ClassNotFoundException {
-		//UPDATE `usuarios` SET `correo`='z' WHERE `id_usuario`='96';
-		//UPDATE `usuarios` SET `nombre` = 'y' WHERE `usuarios`.`id_usuario` = 2; 
+
 		Connection con = null;
 		Statement sentencia = null;
 		int ok = 0;
@@ -370,11 +362,11 @@ public class crud {
 		String sql = "UPDATE `usuarios` SET `nombre`='";
 		sql += u.getNombre() + "' WHERE `id_usuario`='";
 		sql += u.getId_usuario() + "'";
-		System.out.println(sql);
+
 		try {
-			System.out.println("dentro del try nuevousu");
+
 			con = conexion.conectar();
-			System.out.println(con);
+
 			sentencia = con.createStatement();
 			ok = sentencia.executeUpdate(sql);
 			sentencia.close();
@@ -383,12 +375,10 @@ public class crud {
 
 			ex.getStackTrace();
 		}
-		System.out.println("despues de todo");
-		System.out.println(ok);
-		if(ok!=0) {
-			ok=6;
-			System.out.println(ok);
-			
+
+		if (ok != 0) {
+			ok = 6;
+
 		}
 		return ok;
 
@@ -402,9 +392,9 @@ public class crud {
 		String sql = "UPDATE `usuarios` SET `correo`='";
 		sql += u.getCorreo() + "' WHERE `id_usuario`='";
 		sql += u.getId_usuario() + "'";
-		System.out.println(sql);
+
 		try {
-			System.out.println("dentro del try nuevousu");
+
 			con = conexion.conectar();
 			System.out.println(con);
 			sentencia = con.createStatement();
@@ -415,11 +405,10 @@ public class crud {
 
 			ex.getStackTrace();
 		}
-		System.out.println("despues de todo");
-		System.out.println(ok);
-		if(ok!=0) {
-			ok=6;
-			System.out.println(ok);
+
+		if (ok != 0) {
+			ok = 6;
+
 		}
 		return ok;
 
@@ -435,9 +424,9 @@ public class crud {
 		sql += u.getId_usuario() + "'";
 		System.out.println(sql);
 		try {
-			System.out.println("dentro del try nuevousu");
+
 			con = conexion.conectar();
-			System.out.println(con);
+
 			sentencia = con.createStatement();
 			ok = sentencia.executeUpdate(sql);
 			sentencia.close();
@@ -446,11 +435,10 @@ public class crud {
 
 			ex.getStackTrace();
 		}
-		System.out.println("despues de todo");
-		System.out.println(ok);
-		if(ok!=0) {
-			ok=6;
-			System.out.println("El numero es:"+ok);
+
+		if (ok != 0) {
+			ok = 6;
+
 		}
 		return ok;
 

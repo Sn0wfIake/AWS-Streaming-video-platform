@@ -84,18 +84,7 @@ int arr= listaC.size();
                 </li>
                 <li>
                     <a href="controladorproyecto?action=5">Mi perfil</a>
-                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Lista de favoritos</a>
-                    <ul class="collapse list-unstyled" id="pageSubmenu">
-                        <li>
-                            <a href="#">Page 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Page 2</a>
-                        </li>
-                        <li>
-                            <a href="#">Page 3</a>
-                        </li>
-                    </ul>
+                   
                 </li>
                 
                 

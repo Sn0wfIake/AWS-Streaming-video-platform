@@ -91,12 +91,12 @@ if (request.getParameter("cerrar")!=null){
 					</div>
 					<div class="item">
 						<img
-							src="https://proyectofinalamm.s3.eu-west-3.amazonaws.com/imagenespag/login/tres.png"
+							src="https://proyectofinalamm.s3.eu-west-3.amazonaws.com/imagenespag/login/tres.JPG"
 							alt="">
 					</div>
 					<div class="item">
 						<img
-							src="https://proyectofinalamm.s3.eu-west-3.amazonaws.com/imagenespag/login/video.png"
+							src="https://proyectofinalamm.s3.eu-west-3.amazonaws.com/imagenespag/login/video.JPG"
 							alt="">
 					</div>
 				</div>

@@ -45,11 +45,11 @@ public class controladorproyecto extends HttpServlet {
 		String login;
 		switch (action) {
 		case 1:
-System.out.println("intento iniciar sesion");
+
 			// iniciar sesion
 			login = request.getParameter("user");
 			clave = request.getParameter("passwd");
-			System.out.println(login + " " + clave);
+			
 			try {
 				iniciases(request, response, login, clave);
 			} catch (ClassNotFoundException | SQLException | ServletException | IOException e1) {
@@ -67,19 +67,18 @@ System.out.println("intento iniciar sesion");
 			u.setCorreo((String) request.getParameter("correo"));
 			u.setNombre((String) request.getParameter("nombre"));
 
-			System.out.println("usuario " + u.toString());
-			System.out.println(login + " " + clave);
+		
 			try {
-				System.out.println("inserto a " + u.getNombre());
+				
 
 				nuevoUsu(request, response, u);
 			} catch (ClassNotFoundException f) {
 				// TODO Auto-generated catch block
 				f.printStackTrace();
-				System.out.println("error en la 1º parte");
+				
 			}
 			break;
-		case 3:
+		case 3: //Devuelve a la pantalla de seleccion de los contenidos seleccionados
 			String requerido = (request.getParameter("demandado"));
 			crud ai = new crud();
 			ArrayList<contenidos> listado = null;
@@ -106,12 +105,9 @@ System.out.println("intento iniciar sesion");
 
 		case 4:
 			devuelvemain(request, response);
-		
-			// Redirijo al main
 
-			
 			break;
-		case 5:
+		case 5:	//Cierro la sesion
 			HttpSession session = request.getSession();
 			String usu = (String) session.getAttribute("name");
 			session.setAttribute("name", usu);
@@ -121,7 +117,7 @@ System.out.println("intento iniciar sesion");
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		case 6:
+		case 6: //Actualizando los datos
 			usuarios us = new usuarios();
 			us.setId_usuario(Integer.parseInt((request.getParameter("id"))));
 			us.setContrasena((String) (request.getParameter("clave")));
@@ -137,6 +133,8 @@ System.out.println("intento iniciar sesion");
 			break;
 		}
 	}
+	
+	//Actualiza los datos que el usuario desea cambiar
 	private void actualizaDatos(HttpServletRequest request, HttpServletResponse response, usuarios us) throws ServletException, IOException, ClassNotFoundException {
 		int ok = 0;
 		crud ai=new crud();
@@ -165,6 +163,8 @@ System.out.println("intento iniciar sesion");
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/perfiles.jsp");
 		dispatcher.forward(request, response);
 	}
+	
+	//Devuelve al main desde cualquier otra pagina (evita bugs)
 	private void devuelvemain(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		ArrayList<contenidos> videos, series;
@@ -181,7 +181,7 @@ System.out.println("intento iniciar sesion");
 		// Saco 15 recomendaciones aleatorias
 		int[] nums = ai1.listaRecomendaciones(videos);
 		int[] recoserie = ai1.listaRecomendaciones(series);
-		System.out.println("He acabado esto");
+	
 		// Envio todos los parametros para el main
 
 		request.setAttribute("listaC", videos);
@@ -194,7 +194,8 @@ System.out.println("intento iniciar sesion");
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/mainredirect.jsp");
 		dispatcher.forward(request, response);
 	}
-
+ 
+	//Inicia sesion
 	private void iniciases(HttpServletRequest request, HttpServletResponse response, String login, String clave)
 			throws ClassNotFoundException, SQLException, ServletException, IOException {
 		ArrayList<usuarios> listaU;
@@ -229,44 +230,19 @@ System.out.println("intento iniciar sesion");
 		dispatcher.forward(request, response);
 
 	}
-
+//Crea un nuevousuario
 	private void nuevoUsu(HttpServletRequest request, HttpServletResponse response, usuarios u)
 			throws ServletException, IOException, ClassNotFoundException {
-		System.out.println("insertando el nuevo usuario");
-		System.out.println(u.toString());
-		System.out.println(u.getNombre());
+		
 		String user= u.getNombre();
-		System.out.println("usuario: "+user);
+		
 		int ok;
 
 		crud ai = new crud();
 		ok = ai.nuevoUsu(u);
 
 		request.setAttribute("ok", String.valueOf(ok));
-		if (ok == 0) {
-//Tiene sentido???!?
-			ArrayList<contenidos> videos, series;
-			ai = new crud();
-
-			// Lista de series y lista del contenido
-			videos = ai.listaContenido();
-			series = ai.listaSeries();
-			// Saco 15 recomendaciones aleatorias
-			int[] nums = ai.listaRecomendaciones(videos);
-			int[] recoserie = ai.listaRecomendaciones(series);
-
-			// Envio todos los parametros para el main
-			System.out.println("usuario: "+user);
-			HttpSession session = request.getSession();
-
-			session.setAttribute("name", u);
-			
-			request.setAttribute("listaC", videos);
-			request.setAttribute("listaS", series);
-			request.setAttribute("nums", nums);
-			request.setAttribute("recoserie", recoserie);
-			
-		}
+	
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/registrocompleto.jsp");
 		dispatcher.forward(request, response);
 	}

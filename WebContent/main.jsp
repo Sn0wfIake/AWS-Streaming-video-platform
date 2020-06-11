@@ -12,20 +12,19 @@
 
 	<%
 	ArrayList<usuarios> listaU = (ArrayList<usuarios>) request.getAttribute("listaU");
-	System.out.println("Denrto de jsp "+listaU);
 	
 	ArrayList<contenidos> listaC = (ArrayList<contenidos>) request.getAttribute("listaC");
-	System.out.println("Denrto de jsp 1 "+listaC);
+	
 	ArrayList<contenidos> listaS = (ArrayList<contenidos>) request.getAttribute("listaS");
-	System.out.println("Denrto de jsp 2 "+listaS);
+
 	int arr2[] = (int[]) request.getAttribute("recoserie");
-	System.out.println("Denrto de jsp 2 "+arr2.length);
+	
 	int arr[] = (int[]) request.getAttribute("nums");
-	System.out.println("Denrto de jsp 3 "+arr.length);
+
 	String user = "";
 
 		
-
+//Busco si el usuario existe, le pongo la pagina, si no, salta error
 	
 if (listaU.isEmpty()) {
 		out.println("Error an el login, intentalo de nuevo");
@@ -104,14 +103,7 @@ if (listaU.isEmpty()) {
 							</ul></li>
 
 						<li><a href="controladorproyecto?action=5">Mi perfil</a></li>
-						<li><a href="#pageSubmenu" data-toggle="collapse"
-							aria-expanded="false" class="dropdown-toggle">Lista de
-								favoritos</a>
-							<ul class="collapse list-unstyled" id="pageSubmenu">
-								<li><a href="#">Peliculas favoritas </a></li>
-								<li><a href="#">Series/Videos favoritos</a></li>
-								<li><a href="#">Musica favorita</a></li>
-							</ul></li>
+						
 
 					</ul>
 
@@ -305,6 +297,9 @@ if (listaU.isEmpty()) {
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 
+
+<!-- Controles de la barrita lateral -->
+
 	<script type="text/javascript">
         $(document).ready(function () {
             $("#sidebar").mCustomScrollbar({
@@ -324,6 +319,9 @@ if (listaU.isEmpty()) {
             });
         });
     </script>
+    
+    
+    <!-- Ventana modal con bootstrap -->
 	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
 		aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg" role="document">
@@ -350,36 +348,35 @@ if (listaU.isEmpty()) {
 			</div>
 		</div>
 	</div>
-
+<!-- Controles de los videos, para que cuando selecciones uno, salga el seleccionado -->
 	<script type="text/javascript">
       //Url del video a reproducir
-      var videoSrc='https://proyectofinalamm.s3.eu-west-3.amazonaws.com/sonido/Always+Somewhere+(2015+Remaster).mp4';
-     //BUSCO LA CANCION A REPRODUCIR
+      var videoSrc='';
+     //BUSCO LA CANCION A REPRODUCIR dentro de el div con id brand el atributo img
       var brandImg = document.querySelectorAll("#brand img");
       var thisSrc;
+      //Por cada elemento en brandimg recorro el array para buscar la cancion que he hecho click
       for (var i = 0; i < brandImg.length; i++) {
           var ckEdiloop = brandImg[i];
           ckEdiloop.addEventListener("click", function(el){
               thisSrc = this.title;
-              var ckEdImg = '<p><img src="'+thisSrc+'" /></p>'; // La forma como las imágenes son envueltas en ckEditor
-             
+              var ckEdImg = '<p><img src="'+thisSrc+'" /></p>';
+             //En la modal meto el link de la imagen seleccionada
               document.getElementById("exampleModalLabel").innerHTML = thisSrc;
               videoSrc=document.getElementById(thisSrc).value;
-              // CKEDITOR.instances['mi_textarea'].insertHtml(ckEdImg) // Añade img al editor
+            
           });
       }
       console.log(thisSrc);
-      //Al abrir la ventana modal, le agregué autoplay igual a 1, para que se reproduzca
-      //automáticamente, en caso de que no se requiera la autoreproducción, se quita 
-      //esa parte "?autoplay=1".
+      //Al abrir la ventana modal,por defecto tiene autoplay ireproduzca Automaticamente
+
       $('#exampleModal').on('show.bs.modal', function () {  
         var iframe=$('#iframeVideo');
         iframe.attr("src", videoSrc+"?autoplay=1");
       });
 
-      //Al cerrar la ventana modal, solamente reasignamos el video al atributo del iframe
-      //y eso ocasiona que se detenga la reproducción del archivo,
-      //aunque también podríamos haber dejado el valor src en null. :)
+      //Al cerrar la ventana modal, solamente reasignamos el video al atributo del iframe de forma que se para el video al presionar cerrar o hacer click fuera
+
       $('#exampleModal').on('hidden.bs.modal', function (e) {
         src="null";
 		
@@ -391,19 +388,7 @@ if (listaU.isEmpty()) {
       
       
     </script>
-	<script type="text/javascript">
-  /*  var brandImg = document.querySelectorAll("#brand img");
 
-    for (var i = 0; i < brandImg.length; i++) {
-        var ckEdiloop = brandImg[i];
-        ckEdiloop.addEventListener("click", function(el){
-            var thisSrc = this.src;
-            var ckEdImg = '<p><img src="'+thisSrc+'" /></p>'; // La forma como las imágenes son envueltas en ckEditor
-            alert('img src es = ' + thisSrc);
-            // CKEDITOR.instances['mi_textarea'].insertHtml(ckEdImg) // Añade img al editor
-        });
-    }*/
-    </script>
 
 	<%}%>
 

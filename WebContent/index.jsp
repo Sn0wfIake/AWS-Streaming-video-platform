@@ -81,7 +81,7 @@
 	}
 </script>
 
-<title>SnowMedia</title>
+<title>SnowMedia Pagina de inicio</title>
 </head>
 <body>
 
@@ -111,17 +111,17 @@
 				<div class="carousel-inner">
 					<div class="item active">
 						<img
+							src="https://proyectofinalamm.s3.eu-west-3.amazonaws.com/imagenespag/login/tres.JPG"
+							alt="">
+					</div>
+					<div class="item">
+						<img
+							src="https://proyectofinalamm.s3.eu-west-3.amazonaws.com/imagenespag/login/video.JPG"
+							alt="">
+					</div>
+					<div class="item">
+						<img
 							src="https://proyectofinalamm.s3.eu-west-3.amazonaws.com/imagenespag/login/dino.jpg"
-							alt="">
-					</div>
-					<div class="item">
-						<img
-							src="https://proyectofinalamm.s3.eu-west-3.amazonaws.com/imagenespag/login/tres.png"
-							alt="">
-					</div>
-					<div class="item">
-						<img
-							src="https://proyectofinalamm.s3.eu-west-3.amazonaws.com/imagenespag/login/video.png"
 							alt="">
 					</div>
 				</div>
