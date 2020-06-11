@@ -49,7 +49,7 @@ public class controladorproyecto extends HttpServlet {
 			// iniciar sesion
 			login = request.getParameter("user");
 			clave = request.getParameter("passwd");
-			System.out.println(login + " " + clave);
+			
 			try {
 				iniciases(request, response, login, clave);
 			} catch (ClassNotFoundException | SQLException | ServletException | IOException e1) {
@@ -67,19 +67,18 @@ public class controladorproyecto extends HttpServlet {
 			u.setCorreo((String) request.getParameter("correo"));
 			u.setNombre((String) request.getParameter("nombre"));
 
-			System.out.println("usuario " + u.toString());
-			System.out.println(login + " " + clave);
+		
 			try {
-				System.out.println("inserto a " + u.getNombre());
+				
 
 				nuevoUsu(request, response, u);
 			} catch (ClassNotFoundException f) {
 				// TODO Auto-generated catch block
 				f.printStackTrace();
-				System.out.println("error en la 1º parte");
+				
 			}
 			break;
-		case 3:
+		case 3: //Devuelve a la pantalla de seleccion de los contenidos seleccionados
 			String requerido = (request.getParameter("demandado"));
 			crud ai = new crud();
 			ArrayList<contenidos> listado = null;
@@ -106,14 +105,66 @@ public class controladorproyecto extends HttpServlet {
 
 		case 4:
 			devuelvemain(request, response);
-		
-			// Redirijo al main
 
-			
+			break;
+		case 5:	//Cierro la sesion
+			HttpSession session = request.getSession();
+			String usu = (String) session.getAttribute("name");
+			session.setAttribute("name", usu);
+			try {
+				devuelvePerfil(request, response, usu);
+			} catch (ClassNotFoundException | ServletException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		case 6: //Actualizando los datos
+			usuarios us = new usuarios();
+			us.setId_usuario(Integer.parseInt((request.getParameter("id"))));
+			us.setContrasena((String) (request.getParameter("clave")));
+			us.setCorreo((String) request.getParameter("correo"));
+			us.setNombre((String) request.getParameter("nombre"));
+			System.out.println(us.toString());
+			try {
+				actualizaDatos(request, response, us);
+			} catch (ClassNotFoundException | ServletException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			break;
 		}
 	}
+	
+	//Actualiza los datos que el usuario desea cambiar
+	private void actualizaDatos(HttpServletRequest request, HttpServletResponse response, usuarios us) throws ServletException, IOException, ClassNotFoundException {
+		int ok = 0;
+		crud ai=new crud();
+	if(!us.getNombre().isEmpty() && us.getNombre()!=null) {
+		ok=ai.actualizaNombre(us);
+	
+	}
+	if(!us.getCorreo().isEmpty() && us.getContrasena()!=null) {
+		ok=ai.actualizaCorreo(us);
+		
+	}
+	if(!us.getContrasena().isEmpty() && us.getContrasena()!=null) {
+		ok=ai.actualizaContrasena(us);
+		
+	}
+	request.setAttribute("ok", String.valueOf(ok));
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/registrocompleto.jsp");
+		dispatcher.forward(request, response);
+	}
 
+	private void devuelvePerfil(HttpServletRequest request, HttpServletResponse response, String usu) throws ServletException, IOException, ClassNotFoundException {
+		crud ai = new crud();
+		ArrayList<usuarios> listaU;
+		listaU=ai.identificarP(usu);
+		request.setAttribute("listaU", listaU);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/perfiles.jsp");
+		dispatcher.forward(request, response);
+	}
+	
+	//Devuelve al main desde cualquier otra pagina (evita bugs)
 	private void devuelvemain(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		ArrayList<contenidos> videos, series;
@@ -130,7 +181,7 @@ public class controladorproyecto extends HttpServlet {
 		// Saco 15 recomendaciones aleatorias
 		int[] nums = ai1.listaRecomendaciones(videos);
 		int[] recoserie = ai1.listaRecomendaciones(series);
-		System.out.println("He acabado esto");
+	
 		// Envio todos los parametros para el main
 
 		request.setAttribute("listaC", videos);
@@ -143,7 +194,8 @@ public class controladorproyecto extends HttpServlet {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/mainredirect.jsp");
 		dispatcher.forward(request, response);
 	}
-
+ 
+	//Inicia sesion
 	private void iniciases(HttpServletRequest request, HttpServletResponse response, String login, String clave)
 			throws ClassNotFoundException, SQLException, ServletException, IOException {
 		ArrayList<usuarios> listaU;
@@ -178,37 +230,19 @@ public class controladorproyecto extends HttpServlet {
 		dispatcher.forward(request, response);
 
 	}
-
+//Crea un nuevousuario
 	private void nuevoUsu(HttpServletRequest request, HttpServletResponse response, usuarios u)
 			throws ServletException, IOException, ClassNotFoundException {
-		System.out.println("insertando el nuevo PUTO usuario");
-		System.out.println(u.toString());
+		
+		String user= u.getNombre();
+		
 		int ok;
 
 		crud ai = new crud();
 		ok = ai.nuevoUsu(u);
 
 		request.setAttribute("ok", String.valueOf(ok));
-		if (ok == 0) {
-
-			ArrayList<contenidos> videos, series;
-			ai = new crud();
-
-			// Lista de series y lista del contenido
-			videos = ai.listaContenido();
-			series = ai.listaSeries();
-			// Saco 15 recomendaciones aleatorias
-			int[] nums = ai.listaRecomendaciones(videos);
-			int[] recoserie = ai.listaRecomendaciones(series);
-
-			// Envio todos los parametros para el main
-
-			request.setAttribute("listaC", videos);
-			request.setAttribute("listaS", series);
-			request.setAttribute("nums", nums);
-			request.setAttribute("recoserie", recoserie);
-			request.setAttribute("user", u.getNombre());
-		}
+	
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/registrocompleto.jsp");
 		dispatcher.forward(request, response);
 	}

@@ -5,10 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <%
-if (request.getParameter("cerrar")!=null){
+
 	session.invalidate();
 
-}
+
 %>
 <link
 	href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -81,7 +81,7 @@ if (request.getParameter("cerrar")!=null){
 	}
 </script>
 
-<title>SnowMedia 1.8 Redirecciones</title>
+<title>SnowMedia Pagina de inicio</title>
 </head>
 <body>
 
@@ -111,17 +111,17 @@ if (request.getParameter("cerrar")!=null){
 				<div class="carousel-inner">
 					<div class="item active">
 						<img
+							src="https://proyectofinalamm.s3.eu-west-3.amazonaws.com/imagenespag/login/tres.JPG"
+							alt="">
+					</div>
+					<div class="item">
+						<img
+							src="https://proyectofinalamm.s3.eu-west-3.amazonaws.com/imagenespag/login/video.JPG"
+							alt="">
+					</div>
+					<div class="item">
+						<img
 							src="https://proyectofinalamm.s3.eu-west-3.amazonaws.com/imagenespag/login/dino.jpg"
-							alt="">
-					</div>
-					<div class="item">
-						<img
-							src="https://proyectofinalamm.s3.eu-west-3.amazonaws.com/imagenespag/login/tres.png"
-							alt="">
-					</div>
-					<div class="item">
-						<img
-							src="https://proyectofinalamm.s3.eu-west-3.amazonaws.com/imagenespag/login/video.png"
 							alt="">
 					</div>
 				</div>

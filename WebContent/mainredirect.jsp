@@ -6,7 +6,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>SnowMediaLogin</title>
+<title>Pagina principal</title>
 </head>
 <body>
 
@@ -14,20 +14,29 @@
 	
 	
 	ArrayList<contenidos> listaC = (ArrayList<contenidos>) request.getAttribute("listaC");
-	System.out.println("Denrto de jsp 1 "+listaC);
+	
 	ArrayList<contenidos> listaS = (ArrayList<contenidos>) request.getAttribute("listaS");
-	System.out.println("Denrto de jsp 2 "+listaS);
+
 	int arr2[] = (int[]) request.getAttribute("recoserie");
-	System.out.println("Denrto de jsp 2 "+arr2.length);
+	
 	int arr[] = (int[]) request.getAttribute("nums");
-	System.out.println("Denrto de jsp 3 "+arr.length);
+	
 	String user = "";
 
 	//Si cuando la pagina se vuelve a cargar, le enviamos la sesion que tenga, y accede a su contenido	
 
 	HttpSession miSesion = request.getSession();
 	user = (String) session.getAttribute("name");
+	if(user==null){
+		out.println("Error an el login, intentalo de nuevo");
+		
 	%>
+
+	<p>
+		<a href="index.jsp">Volver a logearte</a>
+	</p><%
+	}else{%>
+	
 
 	
 		<title>Inicio Snowmedia</title>
@@ -87,15 +96,8 @@
 								<li><a href="controladorproyecto?action=3&demandado=musica">Musica</a></li>
 							</ul></li>
 
-						<li><a href="#">Mi perfil</a></li>
-						<li><a href="#pageSubmenu" data-toggle="collapse"
-							aria-expanded="false" class="dropdown-toggle">Lista de
-								favoritos</a>
-							<ul class="collapse list-unstyled" id="pageSubmenu">
-								<li><a href="#">Peliculas favoritas </a></li>
-								<li><a href="#">Series/Videos favoritos</a></li>
-								<li><a href="#">Musica favorita</a></li>
-							</ul></li>
+						<li><a href="controladorproyecto?action=5">Mi perfil</a></li>
+						
 
 					</ul>
 
@@ -151,7 +153,7 @@
 						<ul class="nav navbar-nav ml-auto">
 							
 							<li class="nav-item active"><a class="nav-link"
-								href="">Mi
+								href="controladorproyecto?action=5">Mi
 									perfil </a></li>
 							<li class="nav-item"><a class="nav-link"
 								href="index.jsp?cerrar=true">Cerrar sesion</a></li>
@@ -337,7 +339,7 @@
 
 	<script type="text/javascript">
       //Url del video a reproducir
-      var videoSrc='https://proyectofinalamm.s3.eu-west-3.amazonaws.com/sonido/Always+Somewhere+(2015+Remaster).mp4';
+      var videoSrc='';
      //BUSCO LA CANCION A REPRODUCIR
       var brandImg = document.querySelectorAll("#brand img");
       var thisSrc;
@@ -345,17 +347,15 @@
           var ckEdiloop = brandImg[i];
           ckEdiloop.addEventListener("click", function(el){
               thisSrc = this.title;
-              var ckEdImg = '<p><img src="'+thisSrc+'" /></p>'; // La forma como las imágenes son envueltas en ckEditor
+              var ckEdImg = '<p><img src="'+thisSrc+'" /></p>'; 
              
               document.getElementById("exampleModalLabel").innerHTML = thisSrc;
               videoSrc=document.getElementById(thisSrc).value;
-              // CKEDITOR.instances['mi_textarea'].insertHtml(ckEdImg) // Añade img al editor
+          
           });
       }
       console.log(thisSrc);
-      //Al abrir la ventana modal, le agregué autoplay igual a 1, para que se reproduzca
-      //automáticamente, en caso de que no se requiera la autoreproducción, se quita 
-      //esa parte "?autoplay=1".
+  
       $('#exampleModal').on('show.bs.modal', function () {  
         var iframe=$('#iframeVideo');
         iframe.attr("src", videoSrc+"?autoplay=1");
@@ -375,22 +375,11 @@
       
       
     </script>
-	<script type="text/javascript">
-  /*  var brandImg = document.querySelectorAll("#brand img");
 
-    for (var i = 0; i < brandImg.length; i++) {
-        var ckEdiloop = brandImg[i];
-        ckEdiloop.addEventListener("click", function(el){
-            var thisSrc = this.src;
-            var ckEdImg = '<p><img src="'+thisSrc+'" /></p>'; // La forma como las imágenes son envueltas en ckEditor
-            alert('img src es = ' + thisSrc);
-            // CKEDITOR.instances['mi_textarea'].insertHtml(ckEdImg) // Añade img al editor
-        });
-    }*/
-    </script>
 
 	
-
+<%} %>
 
 
 </body>
+</html>
